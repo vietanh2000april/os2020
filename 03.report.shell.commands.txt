@@ -1,0 +1,57 @@
+//list all running process
+input: ps -e
+output: 
+ PID TTY          TIME CMD
+     1 ?        00:00:01 systemd
+     2 ?        00:00:00 kthreadd
+     4 ?        00:00:00 kworker/0:0H
+     6 ?        00:00:00 mm_percpu_wq
+     7 ?        00:00:00 ksoftirqd/0
+     8 ?        00:00:02 rcu_sched
+     9 ?        00:00:00 rcu_bh
+    10 ?        00:00:00 migration/0
+---
+//start gnome-calculator
+input: gnome-calculator
+output: 
+//a virtual calculator app pops up
+---
+//output gnome-calculator PID
+input: gnome-calculator & echo $!
+output:
+[1] 3493
+3493
+---
+//output PID of every process with name containing "gnome"
+input: ps -e | grep gnome
+output:
+//1 column = PID = process id
+  1111 ?        00:00:00 gnome-keyring-d
+  1312 ?        00:00:00 polkit-gnome-au
+  3212 ?        00:00:15 gnome-terminal-
+---
+//see the status of process with PID 3212
+input: cat /proc/3212/status
+output:
+Name:	gnome-terminal-
+Umask:	0022
+State:	S (sleeping)
+Tgid:	3212
+Ngid:	0
+Pid:	3212
+PPid:	985
+TracerPid:	0
+Uid:	1000	1000	1000	1000
+Gid:	1000	1000	1000	1000
+//etc (there is more)
+---
+//pause the process with PID 3212
+input: kill -STOP 3212
+output: //the terminal froze 
+---
+input: kill -CONT 3212
+output: //i restarted the terminal at this point so there is no process 
+//with id 3212
+---
+input: kill -KILL 3212 //instead of 3212, I could enter a different PID here
+output: //there is no such process

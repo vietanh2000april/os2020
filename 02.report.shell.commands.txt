@@ -1,0 +1,42 @@
+//list all file in current dir with "list" in name
+input: ls | grep "list"
+output: 
+---
+//count how many lines that /etc/passwd has
+input: wc /etc/passwd
+output:   41   75 2504 /etc/passwd
+---
+//check out memory status
+input: free
+output:
+      total        used        free      shared  buff/cache   available
+Mem:        2017260     1392480      138716       38056      486064      417176
+Swap:        777300       11276      766024
+//...(there is still more)
+//-> Mem = 2017260
+---
+//check out the number of cores I have
+input: cat /proc/cpuinfo
+output: 
+processor	: 0
+vendor_id	: GenuineIntel
+cpu family	: 6
+model		: 142
+model name	: Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz
+stepping	: 9
+microcode	: 0x8e
+cpu MHz		: 2712.004
+cache size	: 3072 KB
+physical id	: 0
+siblings	: 1
+core id		: 0
+cpu cores	: 1
+//etc (there is still more)
+//number of cores = 1
+---
+//find .jpg file in photo dir
+input: find /photo -name "*.jpg"
+output: 
+find: ‘/photo’: No such file or directory
+---
+
